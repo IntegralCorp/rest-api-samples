@@ -1,0 +1,194 @@
+{
+	"info": {
+		"_postman_id": "5fbf6bdb-8b6c-4736-9bab-23935de0f055",
+		"name": "Positions API Samples",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10520594"
+	},
+	"item": [
+		{
+			"name": "1_ Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/javascript, */*; q=0.01",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user\": \"<Enter user id>\",\r\n  \"org\": \"<Enter organization code>\",\r\n  \"pass\": \"<Enter Password>\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server_url}}/sso/login",
+					"host": [
+						"{{server_url}}"
+					],
+					"path": [
+						"sso",
+						"login"
+					]
+				},
+				"description": "Get authorization key"
+			},
+			"response": [
+				{
+					"name": "1_RFS Login_example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/javascript, */*; q=0.01",
+								"type": "text"
+							},
+							{
+								"key": "Content-Length",
+								"value": "91",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "CLIENT_TYPE",
+								"value": "Browser",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user\": \"{{username}}\",\r\n  \"org\": \"{{RFSorg}}\",\r\n  \"pass\": \"{{password}}\"\r\n}\r\n\r\n\r\n/*{\r\n  \"user\": \"{{username}}\",\r\n  \"org\": \"{{org}}\",\r\n  \"pass\": \"{{password}}\"\r\n}*/",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server_url}}/sso/login",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"sso",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "SSO_TOKEN=ZXpn65FGufrCEOM5eImAK-KJprAHdhA3D95oAd7ZcYvSo3H1kdqjJz7uHlVKhW1ER8vZGeijA_RTV7hvn9-J3Q; Domain=www.integral.com; Path=/"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "SSO_TOKEN=ZXpn65FGufrCEOM5eImAK-KJprAHdhA3D95oAd7ZcYvSo3H1kdqjJz7uHlVKhW1ER8vZGeijA_RTV7hvn9-J3Q; Path=/"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "LOGIN_TIME=1657275521007; Path=/"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "sso_sticky_session_apigateway=apigateway1; path=/"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 08 Jul 2022 10:18:41 GMT"
+						},
+						{
+							"key": "X-Request-ID",
+							"value": "85762c2e-3906-48d0-a2c4-8ed415f6906e#304"
+						},
+						{
+							"key": "X-Kong-Upstream-Latency",
+							"value": "4"
+						},
+						{
+							"key": "X-Kong-Proxy-Latency",
+							"value": "1"
+						},
+						{
+							"key": "Via",
+							"value": "kong/2.0.4"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=16000000; includeSubDomains; preload;"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"OK\",\n    \"expiryTime\": 1657311521007,\n    \"serverUTCTime\": 1657275521008\n}"
+				}
+			]
+		},
+		{
+			"name": "Open Positions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{env.host}}/v2/positions?symbol=EUR/USD&level=ORG",
+					"host": [
+						"{{env.host}}"
+					],
+					"path": [
+						"v2",
+						"positions"
+					],
+					"query": [
+						{
+							"key": "symbol",
+							"value": "EUR/USD"
+						},
+						{
+							"key": "level",
+							"value": "ORG"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
