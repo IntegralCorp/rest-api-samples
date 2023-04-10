@@ -198,7 +198,7 @@
 				"header": [
 					{
 						"key": "SSO_TOKEN",
-						"value": "YXTlUQI22WrHR79_RrQPAI6O6cfUnknmTsVl65nRbncIo8ruhJPwa2mrR7oMpxxf",
+						"value": "",
 						"type": "text"
 					}
 				],
@@ -430,7 +430,7 @@
 				"header": [
 					{
 						"key": "SSO_TOKEN",
-						"value": "YXTlUQI22WrHR79_RrQPAI6O6cfUnknmTsVl65nRbncIo8ruhJPwa2mrR7oMpxxf",
+						"value": "",
 						"type": "text"
 					}
 				],
@@ -685,7 +685,13 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "SSO_TOKEN",
+						"value": "",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n   \"clOrderId\": \"1674806014\",\r\n   \"quoteId\": \"G-6055299-185f3c19468-BRKJ-14216ac5-APITesting-BRKJ-1674831828073\",\r\n   \"side\": \"BUY\",\r\n   \"dealtCurrency\": \"USD\",\r\n   \"symbol\": \"EUR/USD\"\r\n   }",
