@@ -1,0 +1,481 @@
+{
+	"info": {
+		"_postman_id": "1e251579-0f8c-4d1a-b206-b3364b76ee4a",
+		"name": "ESP Order Samples",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10520594"
+	},
+	"item": [
+		{
+			"name": "1_ Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/javascript, */*; q=0.01",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user\": \"<Enter user id>\",\r\n  \"org\": \"<Enter organization code>\",\r\n  \"pass\": \"<Enter Password>\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server_url}}/sso/login",
+					"host": [
+						"{{server_url}}"
+					],
+					"path": [
+						"sso",
+						"login"
+					]
+				},
+				"description": "Get authorization key"
+			},
+			"response": [
+				{
+					"name": "1_RFS Login_example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/javascript, */*; q=0.01",
+								"type": "text"
+							},
+							{
+								"key": "Content-Length",
+								"value": "91",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "CLIENT_TYPE",
+								"value": "Browser",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user\": \"{{username}}\",\r\n  \"org\": \"{{RFSorg}}\",\r\n  \"pass\": \"{{password}}\"\r\n}\r\n\r\n\r\n/*{\r\n  \"user\": \"{{username}}\",\r\n  \"org\": \"{{org}}\",\r\n  \"pass\": \"{{password}}\"\r\n}*/",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server_url}}/sso/login",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"sso",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 08 Jul 2022 10:18:41 GMT"
+						},
+						{
+							"key": "X-Request-ID",
+							"value": "85762c2e-3906-48d0-a2c4-8ed415f6906e#304"
+						},
+						{
+							"key": "X-Kong-Upstream-Latency",
+							"value": "4"
+						},
+						{
+							"key": "X-Kong-Proxy-Latency",
+							"value": "1"
+						},
+						{
+							"key": "Via",
+							"value": "kong/2.0.4"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=16000000; includeSubDomains; preload;"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"OK\",\n    \"expiryTime\": 1657311521007,\n    \"serverUTCTime\": 1657275521008\n}"
+				}
+			]
+		},
+		{
+			"name": "Limit_Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "SSO_TOKEN",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"coId\" : \"dOrder2\",\n  \"currency\" : \"CHF\",\n  \"size\" : \"10000\",\n  \"type\" : \"Limit\",\n  \"price\" : \"10.35278\",\n  \"side\" : \"Buy\",\n  \"symbol\" : \"CHF/NOK\",\n  \"timeInForce\" : \"FOK\",\n  \"org\" : \"APITesting\"\n}"
+				},
+				"url": {
+					"raw": "https://uat.fxinside.net/v2/orders/",
+					"protocol": "https",
+					"host": [
+						"uat",
+						"fxinside",
+						"net"
+					],
+					"path": [
+						"v2",
+						"orders",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Limit_IOC_Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "SSO_TOKEN",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"coId\" : \"dOrder6\",\n  \"currency\" : \"CHF\",\n  \"size\" : \"10000\",\n  \"type\" : \"Limit\",\n  \"price\" : \"10.35278\",\n  \"side\" : \"Buy\",\n  \"symbol\" : \"CHF/NOK\",\n  \"timeInForce\" : \"IOC\",\n  \"org\" : \"APITesting\"\n}"
+				},
+				"url": {
+					"raw": "https://uat.fxinside.net/v2/orders/",
+					"protocol": "https",
+					"host": [
+						"uat",
+						"fxinside",
+						"net"
+					],
+					"path": [
+						"v2",
+						"orders",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Market_Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "SSO_TOKEN",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"coId\" : \"dOrder4\",\n  \"currency\" : \"EUR\",\n  \"size\" : \"10000\",\n  \"type\" : \"Market\",\n  \"side\" : \"Buy\",\n  \"symbol\" : \"EUR/USD\",\n  \"timeInForce\" : \"FOK\",\n  \"org\" : \"APITesting\"\n}"
+				},
+				"url": {
+					"raw": "https://uat.fxinside.net/v2/orders/",
+					"protocol": "https",
+					"host": [
+						"uat",
+						"fxinside",
+						"net"
+					],
+					"path": [
+						"v2",
+						"orders",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Market_GTT_Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "SSO_TOKEN",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"coId\" : \"dOrder5\",\n  \"currency\" : \"EUR\",\n  \"size\" : \"10000\",\n  \"type\" : \"Market\",\n  \"side\" : \"Buy\",\n  \"symbol\" : \"EUR/USD\",\n  \"timeInForce\": \"GTT\",\n   \"expiryTime\": 35,\n  \"org\" : \"APITesting\"\n} "
+				},
+				"url": {
+					"raw": "https://uat.fxinside.net/v2/orders/",
+					"protocol": "https",
+					"host": [
+						"uat",
+						"fxinside",
+						"net"
+					],
+					"path": [
+						"v2",
+						"orders",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order_Query_ClientOrderId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "SSO_TOKEN",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://uat.fxinside.net/v2/orders?coId=dOrder5",
+					"protocol": "https",
+					"host": [
+						"uat",
+						"fxinside",
+						"net"
+					],
+					"path": [
+						"v2",
+						"orders"
+					],
+					"query": [
+						{
+							"key": "coId",
+							"value": "dOrder5"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server_url",
+			"value": "https://uat.fxinside.net/v2",
+			"type": "string"
+		},
+		{
+			"key": "org",
+			"value": "APITesting",
+			"type": "string"
+		},
+		{
+			"key": "username",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "Le_Name",
+			"value": "APITesting",
+			"type": "string"
+		},
+		{
+			"key": "requestId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "quoteId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "clOrderId",
+			"value": ""
+		}
+	]
+}
