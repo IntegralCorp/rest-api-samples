@@ -1,0 +1,1084 @@
+{
+	"info": {
+		"_postman_id": "057f6061-f1f0-479e-a2b9-5e234eeb0033",
+		"name": "RFS Samples",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10520594"
+	},
+	"item": [
+		{
+			"name": "1_ Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/javascript, */*; q=0.01",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user\": \"<Enter user id>\",\r\n  \"org\": \"<Enter organization code>\",\r\n  \"pass\": \"<Enter Password>\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server_url}}/sso/login",
+					"host": [
+						"{{server_url}}"
+					],
+					"path": [
+						"sso",
+						"login"
+					]
+				},
+				"description": "Get authorization key"
+			},
+			"response": [
+				{
+					"name": "1_RFS Login_example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/javascript, */*; q=0.01",
+								"type": "text"
+							},
+							{
+								"key": "Content-Length",
+								"value": "91",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "CLIENT_TYPE",
+								"value": "Browser",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user\": \"{{username}}\",\r\n  \"org\": \"{{RFSorg}}\",\r\n  \"pass\": \"{{password}}\"\r\n}\r\n\r\n\r\n/*{\r\n  \"user\": \"{{username}}\",\r\n  \"org\": \"{{org}}\",\r\n  \"pass\": \"{{password}}\"\r\n}*/",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server_url}}/sso/login",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"sso",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "SSO_TOKEN=ZXpn65FGufrCEOM5eImAK-KJprAHdhA3D95oAd7ZcYvSo3H1kdqjJz7uHlVKhW1ER8vZGeijA_RTV7hvn9-J3Q; Domain=www.integral.com; Path=/"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "SSO_TOKEN=ZXpn65FGufrCEOM5eImAK-KJprAHdhA3D95oAd7ZcYvSo3H1kdqjJz7uHlVKhW1ER8vZGeijA_RTV7hvn9-J3Q; Path=/"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "LOGIN_TIME=1657275521007; Path=/"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "sso_sticky_session_apigateway=apigateway1; path=/"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 08 Jul 2022 10:18:41 GMT"
+						},
+						{
+							"key": "X-Request-ID",
+							"value": "85762c2e-3906-48d0-a2c4-8ed415f6906e#304"
+						},
+						{
+							"key": "X-Kong-Upstream-Latency",
+							"value": "4"
+						},
+						{
+							"key": "X-Kong-Proxy-Latency",
+							"value": "1"
+						},
+						{
+							"key": "Via",
+							"value": "kong/2.0.4"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=16000000; includeSubDomains; preload;"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"OK\",\n    \"expiryTime\": 1657311521007,\n    \"serverUTCTime\": 1657275521008\n}"
+				}
+			]
+		},
+		{
+			"name": "2_Request_for_Quote",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"console.log(jsonData);\r",
+							"pm.collectionVariables.set(\"requestId\",jsonData.requestId);\r",
+							"pm.collectionVariables.set(\"clOrderId\",jsonData.coId);\r",
+							"\r",
+							"pm.test(\"Status code is 202\", function () {\r",
+							"    pm.response.to.have.status(202);\r",
+							"});\r",
+							"\r",
+							"pm.test('Test Request placed successfully', function() {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.clOrderId).to.not.be.eql(null); \r",
+							"        pm.expect(jsonData.requestId).to.not.be.eql(null);                 \r",
+							"        pm.expect(jsonData.event).to.be.eql('REQUEST_RECEIVED');      \r",
+							"});\r",
+							"\r",
+							"\r",
+							"setTimeout(function(){}, 1500);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "SSO_TOKEN",
+						"value": "YXTlUQI22WrHR79_RrQPAI6O6cfUnknmTsVl65nRbncIo8ruhJPwa2mrR7oMpxxf",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"clOrderId\": \"MyRFSRequestId\",\r\n    \"symbol\": \"EUR/USD\",  \r\n   \"amount\": \"1000000.0\",\r\n   \"dealtCurrency\": \"EUR\",\r\n   \"expiry\": 140,\r\n   \"nearValueDate\": \"1D\",\r\n   \"side\": \"TWO_WAY\",\r\n   \"priceType\": \"Outright\",\r\n   \"customerAccount\": \"APITesting\",\r\n   \"customerOrg\": \"APITesting\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server_url}}/rfs",
+					"host": [
+						"{{server_url}}"
+					],
+					"path": [
+						"rfs"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "3_RFS_GET",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server_url}}/rfs/RFS3",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"rfs",
+								"RFS3"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 27 Jan 2022 11:11:53 GMT"
+						},
+						{
+							"key": "X-Kong-Upstream-Latency",
+							"value": "3"
+						},
+						{
+							"key": "X-Kong-Proxy-Latency",
+							"value": "1"
+						},
+						{
+							"key": "Via",
+							"value": "kong/2.0.4"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"clReqId\": \"RFS3\",\n    \"requestId\": \"G4796976d517e9b38116ccbf\",\n    \"transactionId\": \"FXI9217727194\",\n    \"expiryTimeInSeconds\": 120,\n    \"event\": \"QUOTE\",\n    \"quotes\": [\n        {\n            \"requestId\": \"G4796976d517e9b38116ccbf\",\n            \"priceType\": \"Swap\",\n            \"effectiveTime\": 0,\n            \"symbol\": \"EUR/USD\",\n            \"ttl\": 64,\n            \"dealtCurrency\": \"EUR\",\n            \"status\": \"A\",\n            \"nearSettleDate\": \"02/07/2022\",\n            \"farSettleDate\": \"02/14/2022\",\n            \"bids\": [\n                {\n                    \"legType\": 0,\n                    \"quoteId\": \"G-4796976cf-17e9b38e334-SGR-a4-pfOrg-SG-1643281705442\",\n                    \"type\": \"BID\",\n                    \"dealtAmount\": 1000000,\n                    \"settledAmount\": 1186340,\n                    \"provider\": \"SG\",\n                    \"rate\": 1.18634,\n                    \"spotRate\": 1.18624,\n                    \"forwardPoint\": 0.0001,\n                    \"midRate\": 0\n                }\n            ],\n            \"offers\": [\n                {\n                    \"legType\": 1,\n                    \"quoteId\": \"G-4796976cf-17e9b38e334-SGR-a4-pfOrg-SG-1643281705442\",\n                    \"type\": \"OFFER\",\n                    \"dealtAmount\": 1000000,\n                    \"settledAmount\": 1186140,\n                    \"provider\": \"SG\",\n                    \"rate\": 1.18614,\n                    \"spotRate\": 1.18624,\n                    \"forwardPoint\": -0.0001,\n                    \"midRate\": 0\n                }\n            ]\n        }\n    ]\n}"
+				},
+				{
+					"name": "2_RFSSubscribe",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clOrderId\": \"{{$timestamp}}\",\r\n    \"symbol\": \"EUR/USD\",  \r\n   \"amount\": \"1000000.0\",\r\n   \"dealtCurrency\": \"EUR\",\r\n   \"expiry\": 140,\r\n   \"nearValueDate\": \"1W\",\r\n   \"farDealtAmount\": \"2000000.0\",\r\n   \"farValueDate\": \"2W\",\r\n   \"fixingDate\": \"\",\r\n   \"farFixingDate\": \"\",\r\n   \"side\": \"TWO_WAY\",\r\n   \"priceType\": \"FwdFwd\",\r\n   \"customerAccount\": \"{{Le_Name}}\",\r\n   \"customerOrg\": \"{{org}}\",\r\n   \"priceViewType\": 1,\r\n   \"depth\": 5\r\n      }\r\n\r\n   //\r\n   ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server_url}}/rfs",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"rfs"
+							]
+						}
+					},
+					"status": "Accepted",
+					"code": 202,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 07 Apr 2022 05:41:59 GMT"
+						},
+						{
+							"key": "X-Request-ID",
+							"value": "45e2d7f8-a206-40a2-8a43-db38a812685b#146"
+						},
+						{
+							"key": "X-Kong-Upstream-Latency",
+							"value": "4"
+						},
+						{
+							"key": "X-Kong-Proxy-Latency",
+							"value": "1"
+						},
+						{
+							"key": "Via",
+							"value": "kong/2.0.4"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"clOrderId\": \"1649309912\",\n    \"requestId\": \"G4796976e3_86c41_180028b36ce36\",\n    \"event\": \"REQUEST_RECEIVED\"\n}"
+				}
+			]
+		},
+		{
+			"name": "3_QueryRequest/GetQuote",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"try{\r",
+							"var jsonData1 = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('Test RFS Fetch Quote Request placed successfully', function() {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.clOrderId).to.not.be.eql(null); \r",
+							"    pm.expect(jsonData.requestId).to.not.be.eql(null); \r",
+							"    pm.expect(jsonData.transactionId).to.not.be.eql(null);   \r",
+							"    pm.expect(jsonData.ttl).to.be.gte(120);          \r",
+							"    if(jsonData.event == \"QUOTE\")\r",
+							"    {\r",
+							"        pm.collectionVariables.set(\"quoteId\",jsonData.quotes[0].bids[0].quoteId);\r",
+							"        pm.expect(jsonData.quotes[0].requestId).to.be.not.eql(null);\r",
+							"        pm.expect(jsonData.quotes[0].priceType).to.be.eql(\"FwdFwd\");\r",
+							"        pm.expect(jsonData.quotes[0].effectiveTime).to.be.not.eql(null);\r",
+							"        pm.expect(jsonData.quotes[0].symbol).to.be.eql(\"EUR/USD\");\r",
+							"        pm.expect(jsonData.quotes[0].ttl).to.be.not.eql(null);\r",
+							"        pm.expect(jsonData.quotes[0].status).to.be.oneOf([\"A\",\"B\"]);\r",
+							"        pm.expect(jsonData.quotes[0].nearValueDate).to.be.not.eql(null);\r",
+							"        pm.expect(jsonData.quotes[0].farValueDate).to.be.not.eql(null);\r",
+							"        for(i=0; i<jsonData.quotes[0].bids.length; i++)\r",
+							"        {\r",
+							"        pm.expect(jsonData.quotes[0].bids[i].legType).to.be.oneOf([0,1]);\r",
+							"        pm.expect(jsonData.quotes[0].bids[i].type).to.be.eql(\"BID\");\r",
+							"        pm.expect(jsonData.quotes[0].bids[i].quoteId).to.be.not.eql(null);\r",
+							"        pm.expect(jsonData.quotes[0].bids[i].dealtAmount).to.be.gte(1000000.0);\r",
+							"        pm.expect(jsonData.quotes[0].bids[i].settledAmount).to.be.gte(1000000.0);\r",
+							"        pm.expect(jsonData.quotes[0].bids[i].provider).to.be.not.eql(null);\r",
+							"        pm.expect(jsonData.quotes[0].bids[i].rate).to.be.not.eql(null);\r",
+							"        pm.expect(jsonData.quotes[0].bids[i].spotRate).to.be.not.eql(null);\r",
+							"        pm.expect(jsonData.quotes[0].bids[i].forwardPoint).to.be.not.eql(null);\r",
+							"        pm.expect(jsonData.quotes[0].bids[i].midRate).to.be.not.eql(null);\r",
+							"        if (jsonData.quotes[0].bids[i].legType==1)\r",
+							"        {\r",
+							"        pm.expect(jsonData.quotes[0].bids[i].dealtAmount).to.be.gte(2000000.0);            \r",
+							"        }\r",
+							"\r",
+							"        }\r",
+							"        //Offer side validations\r",
+							"        for(i=0; i<jsonData.quotes[0].offers.length; i++)\r",
+							"        {\r",
+							"        pm.expect(jsonData.quotes[0].offers[i].legType).to.be.oneOf([0,1]);\r",
+							"        pm.expect(jsonData.quotes[0].offers[i].type).to.be.eql(\"OFFER\");\r",
+							"        pm.expect(jsonData.quotes[0].offers[i].quoteId).to.be.not.eql(null);\r",
+							"        pm.expect(jsonData.quotes[0].offers[i].dealtAmount).to.be.gte(1000000.0);\r",
+							"        pm.expect(jsonData.quotes[0].offers[i].settledAmount).to.be.gte(1000000.0);\r",
+							"        pm.expect(jsonData.quotes[0].offers[i].provider).to.be.not.eql(null);\r",
+							"        pm.expect(jsonData.quotes[0].offers[i].rate).to.be.not.eql(null);\r",
+							"        pm.expect(jsonData.quotes[0].offers[i].spotRate).to.be.not.eql(null);\r",
+							"        pm.expect(jsonData.quotes[0].offers[i].forwardPoint).to.be.not.eql(null);\r",
+							"        pm.expect(jsonData.quotes[0].offers[i].midRate).to.be.not.eql(null);\r",
+							"        if (jsonData.quotes[0].offers[i].legType==1)\r",
+							"        {\r",
+							"        pm.expect(jsonData.quotes[0].offers[i].dealtAmount).to.be.gte(2000000.0);            \r",
+							"        }\r",
+							"\r",
+							"        }\r",
+							"        \r",
+							"    }\r",
+							"    else\r",
+							"    {     pm.expect(jsonData.event).to.be.eql('REQUEST_ACCEPTED');      \r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"setTimeout(function(){}, 1500);\r",
+							"}\r",
+							"catch(Error){\r",
+							"    console.log(\"response body is null\");\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "SSO_TOKEN",
+						"value": "YXTlUQI22WrHR79_RrQPAI6O6cfUnknmTsVl65nRbncIo8ruhJPwa2mrR7oMpxxf",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{server_url}}/rfs/G9a21e5_2f3dd_185f3c1944f91b0?",
+					"host": [
+						"{{server_url}}"
+					],
+					"path": [
+						"rfs",
+						"G9a21e5_2f3dd_185f3c1944f91b0"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "3_RFS_GET_ACCEPTED",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server_url}}/rfs/RFS45",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"rfs",
+								"RFS45"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 31 Jan 2022 06:21:46 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"clReqId\": \"RFS45\",\n    \"requestId\": \"G479697b2f17eaecb4b3e517\",\n    \"transactionId\": \"FXI4143730327\",\n    \"expiryTimeInSeconds\": 120,\n    \"event\": \"REQUEST_ACCEPTED\"\n}"
+				},
+				{
+					"name": "RFS-POST",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n                \"symbol\": \"EUR/USD\",\r\n                \"amount\": \"1000000.0\",\r\n                \"dealtCurrency\": \"EUR\",\r\n                \"expiry\": 120,\r\n                \"nearValueDate\": \"1W\",\r\n                \"farDealtAmount\": \"1000000.0\",\r\n                \"farValueDate\": \"2W\",\r\n                \"fixingDate\": \"\",\r\n                \"farFixingDate\": \"\",\r\n                \"side\": \"BUY\",\r\n                \"priceType\": \"Swap\",\r\n                \"customerAccount\": \"pfOrg\",\r\n                \"customerOrg\": \"pfOrg\",\r\n                \"priceViewType\": 1,\r\n                \"depth\": 5,\r\n                \"channel\": \"DNET/RFS/BB\",\r\n                \"providers\": [\"NTFX\", \"MSFX\", \"SG\", \"SUCD\", \"UBS\", \"WFNA\"],\r\n                \"clOrderId\": \"RFS3\"\r\n        }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server_url}}/rfs",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"rfs"
+							]
+						}
+					},
+					"status": "Accepted",
+					"code": 202,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "0"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 27 Jan 2022 11:10:56 GMT"
+						},
+						{
+							"key": "X-Kong-Upstream-Latency",
+							"value": "9"
+						},
+						{
+							"key": "X-Kong-Proxy-Latency",
+							"value": "1"
+						},
+						{
+							"key": "Via",
+							"value": "kong/2.0.4"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				},
+				{
+					"name": "3_RFS_FetchQuote",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server_url}}/rfs/{{requestId}}",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"rfs",
+								"{{requestId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 07 Apr 2022 05:42:04 GMT"
+						},
+						{
+							"key": "X-Request-ID",
+							"value": "45e2d7f8-a206-40a2-8a43-db38a812685b#147"
+						},
+						{
+							"key": "X-Kong-Upstream-Latency",
+							"value": "4"
+						},
+						{
+							"key": "X-Kong-Proxy-Latency",
+							"value": "0"
+						},
+						{
+							"key": "Via",
+							"value": "kong/2.0.4"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"clOrderId\": \"1649309912\",\n    \"requestId\": \"G4796976e3_86c41_180028b36ce36\",\n    \"transactionId\": \"FXI9230123119\",\n    \"ttl\": 140,\n    \"event\": \"QUOTE\",\n    \"quotes\": [\n        {\n            \"requestId\": \"G4796976e3_86c41_180028b36ce36\",\n            \"priceType\": \"FwdFwd\",\n            \"effectiveTime\": 0,\n            \"symbol\": \"EUR/USD\",\n            \"ttl\": 140,\n            \"dealtCurrency\": \"EUR\",\n            \"status\": \"A\",\n            \"nearValueDate\": \"2022-04-18\",\n            \"farValueDate\": \"2022-04-25\",\n            \"bids\": [\n                {\n                    \"legType\": 0,\n                    \"quoteId\": \"G-4796976cf-18002880a53-JPMA-13f-pfOrg-JPM-1649309914831\",\n                    \"type\": \"BID\",\n                    \"dealtAmount\": 1000000,\n                    \"settledAmount\": 1097130,\n                    \"provider\": \"JPM\",\n                    \"rate\": 1.09713,\n                    \"spotRate\": 1.09693,\n                    \"forwardPoint\": 0.0002,\n                    \"midRate\": 0\n                },\n                {\n                    \"legType\": 0,\n                    \"quoteId\": \"G-4796976cb-18002881f69-VISA-14a35b-pfOrg-VISA-1649309917069\",\n                    \"type\": \"BID\",\n                    \"dealtAmount\": 1000000,\n                    \"settledAmount\": 1097010,\n                    \"provider\": \"VISA\",\n                    \"rate\": 1.09701,\n                    \"spotRate\": 1.09691,\n                    \"forwardPoint\": 0.0001,\n                    \"midRate\": 0\n                },\n                {\n                    \"legType\": 0,\n                    \"quoteId\": \"G-4796976cb-18002881f7b-SUCD-14a35e-pfOrg-SUCD-1649309917087\",\n                    \"type\": \"BID\",\n                    \"dealtAmount\": 1000000,\n                    \"settledAmount\": 1097010,\n                    \"provider\": \"SUCD\",\n                    \"rate\": 1.09701,\n                    \"spotRate\": 1.09691,\n                    \"forwardPoint\": 0.0001,\n                    \"midRate\": 0\n                },\n                {\n                    \"legType\": 0,\n                    \"quoteId\": \"G-4796976cf-180028812fc-NTFXA-2b0-pfOrg-NTFX-1649309917047\",\n                    \"type\": \"BID\",\n                    \"dealtAmount\": 1000000,\n                    \"settledAmount\": 1097010,\n                    \"provider\": \"NTFX\",\n                    \"rate\": 1.09701,\n                    \"spotRate\": 1.09691,\n                    \"forwardPoint\": 0.0001,\n                    \"midRate\": 0\n                },\n                {\n                    \"legType\": 0,\n                    \"quoteId\": \"G-4796976cf-180028810da-UBSE-143-pfOrg-B140-1649309916500\",\n                    \"type\": \"BID\",\n                    \"dealtAmount\": 1000000,\n                    \"settledAmount\": 1186300,\n                    \"provider\": \"B140\",\n                    \"rate\": 1.1863,\n                    \"spotRate\": 1.1862,\n                    \"forwardPoint\": 0.0001,\n                    \"midRate\": 0\n                },\n                {\n                    \"legType\": 1,\n                    \"quoteId\": \"G-4796976dd-180028814d1-WFNAD-91ea1-pfOrg-WFNAD-1649309914332\",\n                    \"type\": \"BID\",\n                    \"dealtAmount\": 2000000,\n                    \"settledAmount\": 2283850,\n                    \"provider\": \"WFNAD\",\n                    \"rate\": 1.141925,\n                    \"spotRate\": 1.14157,\n                    \"forwardPoint\": 0.000355,\n                    \"midRate\": 0\n                },\n                {\n                    \"legType\": 1,\n                    \"quoteId\": \"G-4796976cf-18002880a53-JPMA-13f-pfOrg-JPM-1649309914831\",\n                    \"type\": \"BID\",\n                    \"dealtAmount\": 2000000,\n                    \"settledAmount\": 2193420,\n                    \"provider\": \"JPM\",\n                    \"rate\": 1.09671,\n                    \"spotRate\": 1.09691,\n                    \"forwardPoint\": -0.0002,\n                    \"midRate\": 0\n                },\n                {\n                    \"legType\": 1,\n                    \"quoteId\": \"G-4796976cb-18002881f69-VISA-14a35b-pfOrg-VISA-1649309917069\",\n                    \"type\": \"BID\",\n                    \"dealtAmount\": 2000000,\n                    \"settledAmount\": 2193460,\n                    \"provider\": \"VISA\",\n                    \"rate\": 1.09673,\n                    \"spotRate\": 1.09693,\n                    \"forwardPoint\": -0.0002,\n                    \"midRate\": 0\n                },\n                {\n                    \"legType\": 1,\n                    \"quoteId\": \"G-4796976cb-18002881f7b-SUCD-14a35e-pfOrg-SUCD-1649309917087\",\n                    \"type\": \"BID\",\n                    \"dealtAmount\": 2000000,\n                    \"settledAmount\": 2193460,\n                    \"provider\": \"SUCD\",\n                    \"rate\": 1.09673,\n                    \"spotRate\": 1.09693,\n                    \"forwardPoint\": -0.0002,\n                    \"midRate\": 0\n                },\n                {\n                    \"legType\": 1,\n                    \"quoteId\": \"G-4796976cf-180028812fc-NTFXA-2b0-pfOrg-NTFX-1649309917047\",\n                    \"type\": \"BID\",\n                    \"dealtAmount\": 2000000,\n                    \"settledAmount\": 2193460,\n                    \"provider\": \"NTFX\",\n                    \"rate\": 1.09673,\n                    \"spotRate\": 1.09693,\n                    \"forwardPoint\": -0.0002,\n                    \"midRate\": 0\n                }\n            ],\n            \"offers\": [\n                {\n                    \"legType\": 1,\n                    \"quoteId\": \"G-4796976cf-18002880a53-JPMA-13f-pfOrg-JPM-1649309914831\",\n                    \"type\": \"OFFER\",\n                    \"dealtAmount\": 2000000,\n                    \"settledAmount\": 2193660,\n                    \"provider\": \"JPM\",\n                    \"rate\": 1.09683,\n                    \"spotRate\": 1.09693,\n                    \"forwardPoint\": -0.0001,\n                    \"midRate\": 0\n                },\n                {\n                    \"legType\": 1,\n                    \"quoteId\": \"G-4796976cb-18002881f69-VISA-14a35b-pfOrg-VISA-1649309917069\",\n                    \"type\": \"OFFER\",\n                    \"dealtAmount\": 2000000,\n                    \"settledAmount\": 2193620,\n                    \"provider\": \"VISA\",\n                    \"rate\": 1.09681,\n                    \"spotRate\": 1.09691,\n                    \"forwardPoint\": -0.0001,\n                    \"midRate\": 0\n                },\n                {\n                    \"legType\": 1,\n                    \"quoteId\": \"G-4796976cb-18002881f7b-SUCD-14a35e-pfOrg-SUCD-1649309917087\",\n                    \"type\": \"OFFER\",\n                    \"dealtAmount\": 2000000,\n                    \"settledAmount\": 2193620,\n                    \"provider\": \"SUCD\",\n                    \"rate\": 1.09681,\n                    \"spotRate\": 1.09691,\n                    \"forwardPoint\": -0.0001,\n                    \"midRate\": 0\n                },\n                {\n                    \"legType\": 1,\n                    \"quoteId\": \"G-4796976cf-180028812fc-NTFXA-2b0-pfOrg-NTFX-1649309917047\",\n                    \"type\": \"OFFER\",\n                    \"dealtAmount\": 2000000,\n                    \"settledAmount\": 2193620,\n                    \"provider\": \"NTFX\",\n                    \"rate\": 1.09681,\n                    \"spotRate\": 1.09691,\n                    \"forwardPoint\": -0.0001,\n                    \"midRate\": 0\n                },\n                {\n                    \"legType\": 1,\n                    \"quoteId\": \"G-4796976cf-180028810da-UBSE-143-pfOrg-B140-1649309916500\",\n                    \"type\": \"OFFER\",\n                    \"dealtAmount\": 2000000,\n                    \"settledAmount\": 2372200,\n                    \"provider\": \"B140\",\n                    \"rate\": 1.1861,\n                    \"spotRate\": 1.1862,\n                    \"forwardPoint\": -0.0001,\n                    \"midRate\": 0\n                },\n                {\n                    \"legType\": 0,\n                    \"quoteId\": \"G-4796976dd-180028814d1-WFNAD-91ea1-pfOrg-WFNAD-1649309914332\",\n                    \"type\": \"OFFER\",\n                    \"dealtAmount\": 1000000,\n                    \"settledAmount\": 1141570,\n                    \"provider\": \"WFNAD\",\n                    \"rate\": 1.14157,\n                    \"spotRate\": 1.14157,\n                    \"forwardPoint\": 0,\n                    \"midRate\": 0\n                },\n                {\n                    \"legType\": 0,\n                    \"quoteId\": \"G-4796976cf-18002880a53-JPMA-13f-pfOrg-JPM-1649309914831\",\n                    \"type\": \"OFFER\",\n                    \"dealtAmount\": 1000000,\n                    \"settledAmount\": 1097010,\n                    \"provider\": \"JPM\",\n                    \"rate\": 1.09701,\n                    \"spotRate\": 1.09691,\n                    \"forwardPoint\": 0.0001,\n                    \"midRate\": 0\n                },\n                {\n                    \"legType\": 0,\n                    \"quoteId\": \"G-4796976cb-18002881f69-VISA-14a35b-pfOrg-VISA-1649309917069\",\n                    \"type\": \"OFFER\",\n                    \"dealtAmount\": 1000000,\n                    \"settledAmount\": 1097130,\n                    \"provider\": \"VISA\",\n                    \"rate\": 1.09713,\n                    \"spotRate\": 1.09693,\n                    \"forwardPoint\": 0.0002,\n                    \"midRate\": 0\n                },\n                {\n                    \"legType\": 0,\n                    \"quoteId\": \"G-4796976cb-18002881f7b-SUCD-14a35e-pfOrg-SUCD-1649309917087\",\n                    \"type\": \"OFFER\",\n                    \"dealtAmount\": 1000000,\n                    \"settledAmount\": 1097130,\n                    \"provider\": \"SUCD\",\n                    \"rate\": 1.09713,\n                    \"spotRate\": 1.09693,\n                    \"forwardPoint\": 0.0002,\n                    \"midRate\": 0\n                },\n                {\n                    \"legType\": 0,\n                    \"quoteId\": \"G-4796976cf-180028812fc-NTFXA-2b0-pfOrg-NTFX-1649309917047\",\n                    \"type\": \"OFFER\",\n                    \"dealtAmount\": 1000000,\n                    \"settledAmount\": 1097130,\n                    \"provider\": \"NTFX\",\n                    \"rate\": 1.09713,\n                    \"spotRate\": 1.09693,\n                    \"forwardPoint\": 0.0002,\n                    \"midRate\": 0\n                }\n            ]\n        }\n    ]\n}"
+				},
+				{
+					"name": "3_RFS_FetchQuote_Declined",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server_url}}/rfs/{{requestId}}",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"rfs",
+								"{{requestId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 07 Apr 2022 06:06:32 GMT"
+						},
+						{
+							"key": "X-Request-ID",
+							"value": "45e2d7f8-a206-40a2-8a43-db38a812685b#159"
+						},
+						{
+							"key": "X-Kong-Upstream-Latency",
+							"value": "7"
+						},
+						{
+							"key": "X-Kong-Proxy-Latency",
+							"value": "1"
+						},
+						{
+							"key": "Via",
+							"value": "kong/2.0.4"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"clOrderId\": \"RFS_HappyPath1\",\n    \"requestId\": \"G4796976e3_86c41_18002a1905f3c\",\n    \"event\": \"REQUEST_DECLINED\",\n    \"reason\": \"INTERNAL_SERVER_ERROR\"\n}"
+				}
+			]
+		},
+		{
+			"name": "4_AcceptQuote",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"        pm.test(\"Status code is 202\", function () {\r",
+							"    pm.response.to.have.status(202);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"clOrderId\": \"1674806014\",\r\n   \"quoteId\": \"G-6055299-185f3c19468-BRKJ-14216ac5-APITesting-BRKJ-1674831828073\",\r\n   \"side\": \"BUY\",\r\n   \"dealtCurrency\": \"USD\",\r\n   \"symbol\": \"EUR/USD\"\r\n   }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server_url}}/rfs/G9a21e5_2f3dd_185f237b1b584f1",
+					"host": [
+						"{{server_url}}"
+					],
+					"path": [
+						"rfs",
+						"G9a21e5_2f3dd_185f237b1b584f1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "4_POST trade",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"quoteId\": \"G-4796976cf-17e9b536f41-SGR-2-pfOrg-SG-1643283445247\",\r\n            \"side\": \"BUY\",\r\n            \"symbol\": \"EUR/USD\",\r\n            \"dealtCurrency\": \"USD\",\r\n            \"clOrderId\": \"RFS32\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server_url}}/rfs",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"rfs"
+							]
+						}
+					},
+					"status": "Accepted",
+					"code": 202,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "0"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 27 Jan 2022 11:41:27 GMT"
+						},
+						{
+							"key": "X-Kong-Upstream-Latency",
+							"value": "6"
+						},
+						{
+							"key": "X-Kong-Proxy-Latency",
+							"value": "2"
+						},
+						{
+							"key": "Via",
+							"value": "kong/2.0.4"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "5_QueryRequest/GetTrade",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "SSO_TOKEN",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{server_url}}/rfs/G9a21e5_2f3dd_185f10d73d77cf0",
+					"host": [
+						"{{server_url}}"
+					],
+					"path": [
+						"rfs",
+						"G9a21e5_2f3dd_185f10d73d77cf0"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "5_RFS_GETTrade",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server_url}}/rfs/RFS32",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"rfs",
+								"RFS32"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 27 Jan 2022 11:41:47 GMT"
+						},
+						{
+							"key": "X-Kong-Upstream-Latency",
+							"value": "2"
+						},
+						{
+							"key": "X-Kong-Proxy-Latency",
+							"value": "1"
+						},
+						{
+							"key": "Via",
+							"value": "kong/2.0.4"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"clReqId\": \"RFS32\",\n    \"event\": \"REQUEST_RECEIVED\"\n}"
+				},
+				{
+					"name": "5_RFS_QueryTrade",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server_url}}/rfs/{{requestId}}",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"rfs",
+								"{{requestId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 07 Apr 2022 05:42:15 GMT"
+						},
+						{
+							"key": "X-Request-ID",
+							"value": "45e2d7f8-a206-40a2-8a43-db38a812685b#149"
+						},
+						{
+							"key": "X-Kong-Upstream-Latency",
+							"value": "3"
+						},
+						{
+							"key": "X-Kong-Proxy-Latency",
+							"value": "1"
+						},
+						{
+							"key": "Via",
+							"value": "kong/2.0.4"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"clOrderId\": \"1649309912\",\n    \"requestId\": \"G4796976e3_86c41_180028b36ce36\",\n    \"transactionId\": \"FXI9230123119\",\n    \"ttl\": 140,\n    \"event\": \"TRADE_VERIFIED\",\n    \"trades\": [\n        {\n            \"orderId\": \"FXI9230123119\",\n            \"tradeId\": \"FXI9230123119\",\n            \"tradeType\": \"FwdFwd\",\n            \"tenor\": \"1W\",\n            \"tradeDate\": \"2022-04-07\",\n            \"valueDate\": \"2022-04-18\",\n            \"maker\": false,\n            \"orderSide\": \"Sell\",\n            \"status\": \"Verified\",\n            \"symbol\": \"EUR/USD\",\n            \"dealtIns\": \"EUR\",\n            \"customerAccount\": \"pfOrg\",\n            \"customerOrg\": \"pfOrg\",\n            \"trader\": \"user2\",\n            \"counterParty\": \"JPM\",\n            \"cptyLongName\": \"JP Morgan Chase & Co.\",\n            \"cptyTradeId\": \"1649309918961\",\n            \"counterPartyAccount\": \"JPMle\",\n            \"farTenor\": \"2W\",\n            \"farValueDate\": \"2022-04-25\",\n            \"farSide\": \"Buy\",\n            \"counterpartyBLEI\": \"7H6GLXDRUGQFU57RNE97\",\n            \"externalRequestId\": \"1649309912\",\n            \"requestId\": \"G4796976e3_86c41_180028b36ce36\",\n            \"benchMarkRate\": 0,\n            \"farLegISIN\": \"EZVHY11FM756\",\n            \"nearLegISIN\": \"EZS2RR0GR8V2\",\n            \"channel\": \"API/REST/RFS\",\n            \"executionTime\": \"1649309922210\",\n            \"dealtAmount\": 1000000,\n            \"settledAmount\": 1097130,\n            \"baseAmount\": 1000000,\n            \"termAmount\": 1097130,\n            \"spotRate\": 1.09703,\n            \"rate\": 1.09713,\n            \"forwardPoints\": 0.0001,\n            \"swapPoints\": -0.0002,\n            \"farRate\": 1.09693,\n            \"farDealtAmount\": 2000000,\n            \"farSettledAmount\": 2193860,\n            \"farBaseAmount\": 2000000,\n            \"farTermAmount\": 2193860,\n            \"farForwardPoints\": -0.0001,\n            \"midMarket\": false,\n            \"upi\": \"EUR_USD_SWAP\",\n            \"uti\": \"MCQRZU5ST1INP9230123119\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "5_RFS_QueryTrade_16June2022",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server_url}}/rfs/{{requestId}}",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"rfs",
+								"{{requestId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Jun 2022 03:03:37 GMT"
+						},
+						{
+							"key": "X-Request-ID",
+							"value": "a4fc5512-bcf7-435a-9cfb-20e336084060#28"
+						},
+						{
+							"key": "X-Kong-Upstream-Latency",
+							"value": "33"
+						},
+						{
+							"key": "X-Kong-Proxy-Latency",
+							"value": "1"
+						},
+						{
+							"key": "Via",
+							"value": "kong/2.0.4"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"clOrderId\": \"1655348605\",\n    \"requestId\": \"G4796976e3_86c41_1816a772bc03\",\n    \"transactionId\": \"FXI9241449423\",\n    \"ttl\": 140,\n    \"event\": \"TRADE_VERIFIED\",\n    \"trades\": [\n        {\n            \"orderId\": \"FXI9241449423\",\n            \"tradeId\": \"FXI9241449423\",\n            \"tradeType\": \"FwdFwd\",\n            \"tenor\": \"1W\",\n            \"tradeDate\": \"2022-06-16\",\n            \"valueDate\": \"2022-06-27\",\n            \"maker\": false,\n            \"orderSide\": \"Sell\",\n            \"status\": \"Verified\",\n            \"symbol\": \"EUR/USD\",\n            \"dealtIns\": \"EUR\",\n            \"customerAccount\": \"SanityOrgLE\",\n            \"customerOrg\": \"SanityOrg\",\n            \"trader\": \"user1\",\n            \"counterParty\": \"UBS\",\n            \"cptyLongName\": \"UBS\",\n            \"cptyTradeId\": \"LCc6f33856a2ffc\",\n            \"counterPartyAccount\": \"UBS-le1\",\n            \"farTenor\": \"2W\",\n            \"farValueDate\": \"2022-07-05\",\n            \"farSide\": \"Buy\",\n            \"counterpartyBLEI\": \"BFM8T61CT2L1QCEMIK50\",\n            \"externalRequestId\": \"1655348605\",\n            \"requestId\": \"G4796976e3_86c41_1816a772bc03\",\n            \"benchMarkRate\": 0,\n            \"farLegISIN\": \"EZ30ZPPBS3T6\",\n            \"nearLegISIN\": \"EZ6NW538J2G7\",\n            \"channel\": \"API/REST/RFS\",\n            \"executionTime\": \"1655348613032\",\n            \"dealtAmount\": 1000000,\n            \"settledAmount\": 1186300,\n            \"baseAmount\": 1000000,\n            \"termAmount\": 1186300,\n            \"spotRate\": 1.1862,\n            \"rate\": 1.1863,\n            \"forwardPoints\": 0.0001,\n            \"swapPoints\": -0.0002,\n            \"farRate\": 1.1861,\n            \"farDealtAmount\": 2000000,\n            \"farSettledAmount\": 2372200,\n            \"farBaseAmount\": 2000000,\n            \"farTermAmount\": 2372200,\n            \"farForwardPoints\": -0.0001,\n            \"midMarket\": false,\n            \"upi\": \"EUR_USD_SWAP\",\n            \"uti\": \"MCQRZU5ST1INP9241449423\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "5_RFS_QueryTrade_CQA",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server_url}}/rfs/{{requestId}}",
+							"host": [
+								"{{server_url}}"
+							],
+							"path": [
+								"rfs",
+								"{{requestId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 26 Jul 2022 11:18:02 GMT"
+						},
+						{
+							"key": "X-Kong-Upstream-Latency",
+							"value": "2"
+						},
+						{
+							"key": "X-Kong-Proxy-Latency",
+							"value": "1"
+						},
+						{
+							"key": "Via",
+							"value": "kong/2.0.4"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=16000000; includeSubDomains; preload;"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"clOrderId\": \"1658834270\",\n    \"requestId\": \"G479697b2f_9be25_1823a3a36e01f\",\n    \"transactionId\": \"FXI4178697329\",\n    \"ttl\": 120,\n    \"event\": \"TRADE_VERIFIED\",\n    \"trades\": [\n        {\n            \"orderId\": \"FXI4178697329\",\n            \"tradeId\": \"FXI4178697329\",\n            \"tradeType\": \"FwdFwd\",\n            \"tenor\": \"1W\",\n            \"tradeDate\": \"2022-07-26\",\n            \"valueDate\": \"2022-08-04\",\n            \"maker\": false,\n            \"orderSide\": \"Sell\",\n            \"status\": \"Verified\",\n            \"symbol\": \"EUR/USD\",\n            \"dealtIns\": \"EUR\",\n            \"customerAccount\": \"MDFFI1le1\",\n            \"customerOrg\": \"MDFFI1\",\n            \"trader\": \"user1\",\n            \"counterParty\": \"CITIP\",\n            \"cptyLongName\": \"CITI Prime Brokerage (Hub)\",\n            \"cptyTradeId\": \"FXI4178697329C\",\n            \"counterPartyAccount\": \"CITIP\",\n            \"farTenor\": \"2W\",\n            \"farValueDate\": \"2022-08-11\",\n            \"farSide\": \"Buy\",\n            \"externalRequestId\": \"1658834270\",\n            \"requestId\": \"G479697b2f_9be25_1823a3a36e01f\",\n            \"benchMarkRate\": 0,\n            \"farLegISIN\": \"EZ52XTG68J99\",\n            \"nearLegISIN\": \"EZ5RFST76N68\",\n            \"channel\": \"API/REST/RFS\",\n            \"executionTime\": \"1658834278581\",\n            \"dealtAmount\": 1000000,\n            \"settledAmount\": 1185820,\n            \"baseAmount\": 1000000,\n            \"termAmount\": 1185820,\n            \"spotRate\": 1.18572,\n            \"rate\": 1.18582,\n            \"forwardPoints\": 0.0001,\n            \"swapPoints\": -0.0002,\n            \"farRate\": 1.18562,\n            \"farDealtAmount\": 2000000,\n            \"farSettledAmount\": 2371240,\n            \"farBaseAmount\": 2000000,\n            \"farTermAmount\": 2371240,\n            \"farForwardPoints\": -0.0001,\n            \"midMarket\": false,\n            \"upi\": \"EUR_USD_SWAP\",\n            \"uti\": \"MCQRZU5ST1IN4178697329\"\n        }\n    ]\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server_url",
+			"value": "https://uat.fxinside.net/v2",
+			"type": "string"
+		},
+		{
+			"key": "org",
+			"value": "APITesting",
+			"type": "string"
+		},
+		{
+			"key": "username",
+			"value": "user1",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "Forex@1234",
+			"type": "string"
+		},
+		{
+			"key": "Le_Name",
+			"value": "APITesting",
+			"type": "string"
+		},
+		{
+			"key": "requestId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "quoteId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "clOrderId",
+			"value": ""
+		}
+	]
+}
