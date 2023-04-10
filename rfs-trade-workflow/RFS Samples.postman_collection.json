@@ -117,22 +117,6 @@
 							"value": "chunked"
 						},
 						{
-							"key": "Set-Cookie",
-							"value": "SSO_TOKEN=ZXpn65FGufrCEOM5eImAK-KJprAHdhA3D95oAd7ZcYvSo3H1kdqjJz7uHlVKhW1ER8vZGeijA_RTV7hvn9-J3Q; Domain=www.integral.com; Path=/"
-						},
-						{
-							"key": "Set-Cookie",
-							"value": "SSO_TOKEN=ZXpn65FGufrCEOM5eImAK-KJprAHdhA3D95oAd7ZcYvSo3H1kdqjJz7uHlVKhW1ER8vZGeijA_RTV7hvn9-J3Q; Path=/"
-						},
-						{
-							"key": "Set-Cookie",
-							"value": "LOGIN_TIME=1657275521007; Path=/"
-						},
-						{
-							"key": "Set-Cookie",
-							"value": "sso_sticky_session_apigateway=apigateway1; path=/"
-						},
-						{
 							"key": "Date",
 							"value": "Fri, 08 Jul 2022 10:18:41 GMT"
 						},
