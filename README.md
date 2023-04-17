@@ -1,1 +1,1 @@
-# rest-api-samples
+The REST API samples repository contain Postman collections with pre-built API requests and responses, making it easier to test and experiment with the API. This repository is a great resource for developers looking to learn and implement Integral's REST APIs quickly and efficiently.
